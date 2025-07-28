@@ -1,15 +1,11 @@
 :8000 {
     root * /app/public
     encode gzip
-    php_fastcgi unix//var/run/php/php-fpm.sock
+    php_server
     file_server
     
     # Handle Laravel routes
-    @notStatic {
-        not file
-        path /
-    }
-    rewrite @notStatic /index.php
+    try_files {path} /index.php
     
     # Security headers
     header {

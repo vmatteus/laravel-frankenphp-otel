@@ -7,8 +7,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-      - /app/vendor
-      - /app/node_modules
+      - vendor_data:/app/vendor
+      - node_modules_data:/app/node_modules
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
@@ -21,6 +21,13 @@ services:
       - REDIS_HOST=redis
       - REDIS_PASSWORD=null
       - REDIS_PORT=6379
+      # OpenTelemetry configuration
+      - OTEL_SERVICE_NAME=frankenphp-laravel
+      - OTEL_SERVICE_VERSION=1.0.0
+      - OTEL_ENVIRONMENT=local
+      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:-}
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=frankenphp-laravel,service.version=1.0.0,deployment.environment=local
     depends_on:
       - mysql
       - redis
@@ -61,6 +68,8 @@ services:
 volumes:
   mysql_data:
   redis_data:
+  vendor_data:
+  node_modules_data:
 
 networks:
   laravel:

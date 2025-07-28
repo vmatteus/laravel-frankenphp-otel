@@ -27,6 +27,8 @@ RUN pecl install opentelemetry && docker-php-ext-enable opentelemetry
 
 # Configure OpenTelemetry auto-instrumentation
 RUN echo "auto_prepend_file=/app/bootstrap/otel_autoload.php" >> /usr/local/etc/php/conf.d/opentelemetry.ini
+RUN echo "opentelemetry.enable_auto_instrumentation=1" >> /usr/local/etc/php/conf.d/opentelemetry.ini
+RUN echo "opentelemetry.context_storage=fiber" >> /usr/local/etc/php/conf.d/opentelemetry.ini
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

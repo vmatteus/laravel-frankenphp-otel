@@ -21,4 +21,10 @@ if (extension_loaded('opentelemetry')) {
             require_once $registerFile;
         }
     }
+    
+    // Ensure context propagation is enabled for FrankenPHP
+    if (class_exists('OpenTelemetry\Context\Context')) {
+        // Force initialization of context storage for fiber-safe operation
+        \OpenTelemetry\Context\Context::storage();
+    }
 }

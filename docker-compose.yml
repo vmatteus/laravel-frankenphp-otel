@@ -28,6 +28,17 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-}
       - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:-}
       - OTEL_RESOURCE_ATTRIBUTES=service.name=frankenphp-laravel,service.version=1.0.0,deployment.environment=local
+      # OpenTelemetry PHP specific settings
+      - OTEL_PHP_AUTOLOAD_ENABLED=true
+      - OTEL_PROPAGATORS=tracecontext,baggage
+      - OTEL_TRACES_SAMPLER=always_on
+      - OTEL_BSP_SCHEDULE_DELAY=5000
+      - OTEL_BSP_EXPORT_TIMEOUT=30000
+      - OTEL_BSP_MAX_EXPORT_BATCH_SIZE=512
+      - OTEL_BSP_MAX_QUEUE_SIZE=2048
+      # Force context propagation for manual instrumentation
+      - OTEL_PHP_DISABLED_INSTRUMENTATIONS=""
+      - OTEL_PHP_TRACES_PROCESSOR=batch
     depends_on:
       - mysql
       - redis

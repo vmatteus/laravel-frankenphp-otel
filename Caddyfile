@@ -1,0 +1,25 @@
+:8000 {
+    root * /app/public
+    encode gzip
+    php_fastcgi unix//var/run/php/php-fpm.sock
+    file_server
+    
+    # Handle Laravel routes
+    @notStatic {
+        not file
+        path /
+    }
+    rewrite @notStatic /index.php
+    
+    # Security headers
+    header {
+        # Enable HSTS
+        Strict-Transport-Security max-age=31536000;
+        # Prevent mime type sniffing
+        X-Content-Type-Options nosniff
+        # Prevent clickjacking
+        X-Frame-Options DENY
+        # Enable XSS filtering
+        X-XSS-Protection "1; mode=block"
+    }
+}

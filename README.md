@@ -48,7 +48,7 @@ HTTP Request (Auto-Instrumentation)
 ### Stack Tecnológica
 
 - **Runtime:** FrankenPHP (Go + PHP-FPM)
-- **Framework:** Laravel 11
+- **Framework:** Laravel 12
 - **Database:** MySQL 8.0
 - **Telemetry:** OpenTelemetry PHP Extension 1.2.0
 - **Observability:** OTLP Exporter (compatível com Jaeger, Zipkin, APM)
